@@ -6,7 +6,7 @@ from urllib import request
 from urllib.error import HTTPError
 from bs4 import BeautifulSoup
 
-if len(sys.argv)!=2:
+if len(sys.argv) != 2:
     sys.stderr.write("wrong args.\n")
     sys.exit(1)
 
@@ -23,4 +23,4 @@ soup = BeautifulSoup(html, "html.parser")
 meanings = soup.find_all("span", class_="def")
 
 for i, meaning in enumerate(meanings, start=1):
-        print(i, meaning.text, sep=': ')
+    print(i, meaning.text, sep=": ")
