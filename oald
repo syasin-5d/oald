@@ -1,0 +1,26 @@
+#!/usr/bin/env python3
+
+import sys
+import re
+from urllib import request
+from urllib.error import HTTPError
+from bs4 import BeautifulSoup
+
+if len(sys.argv)!=2:
+    sys.stderr.write("wrong args.\n")
+    sys.exit(1)
+
+word = sys.argv[1]
+url = "https://www.oxfordlearnersdictionaries.com/definition/english/" + word
+try:
+    with request.urlopen(url) as response:
+        html = response.read()
+except HTTPError:
+    sys.stderr.write("no match {}\n".format(word))
+    sys.exit(1)
+
+soup = BeautifulSoup(html, "html.parser")
+meanings = soup.find_all("span", class_="def")
+
+for i, meaning in enumerate(meanings, start=1):
+        print(i, meaning.text, sep=': ')
